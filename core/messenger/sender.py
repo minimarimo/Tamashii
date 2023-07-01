@@ -12,6 +12,9 @@ class Sender(Base):
         super().__init__()
         self._sender = load_sender(data)
 
+    def is_available(self) -> bool:
+        return self._sender.is_available()
+
     @hook
     def write(self, contents: bytes, **kwargs) -> bytes:
         return self._sender.write(contents, **kwargs)
@@ -21,5 +24,5 @@ class Sender(Base):
         return self._sender.read(**arg)
 
     @hook
-    def communicate(self) -> None:
-        Thread(target=self._sender.communicate).start()
+    def connect(self) -> None:
+        self._sender.connect()

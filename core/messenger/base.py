@@ -12,6 +12,11 @@ class Base(metaclass=ABCMeta):
         self.args = args
 
     @abstractmethod
+    def is_available(self) -> bool:
+        """karadaとの通信が可能かどうかを返します。"""
+        pass
+
+    @abstractmethod
     def read(self, **kwargs) -> bytes:
         pass
 
@@ -25,9 +30,9 @@ class Base(metaclass=ABCMeta):
 
     def write_str(self, contents: str, **kwargs) -> None:
         """write()の引数をUTF-8のバイト列に変換して渡します。"""
-        self.write(contents.encode("utf-8"), **kwargs)
+        self.write((contents + "\n").encode(), **kwargs)
 
     @abstractmethod
-    def communicate(self) -> None:
+    def connect(self) -> None:
         """karadaとの通信を開始します"""
         pass
