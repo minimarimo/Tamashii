@@ -1,17 +1,8 @@
 from core.messenger.base import Base
 
+from extension.core.messenger.minimarimo3.tcp_base import TcpBase
 
-class Sender(Base):
+
+class Sender(TcpBase):
     def __init__(self, **kwargs) -> None:
-        super().__init__()
-        self.host = kwargs["host"]
-        self.port = kwargs["port"]
-
-    def read(self, **arg) -> bytes:
-        pass
-
-    def write(self, message: bytes, **arg) -> None:
-        pass
-
-    def communicate(self) -> None:
-        print("Sender run!")
+        super().__init__(**kwargs)
