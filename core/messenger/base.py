@@ -12,20 +12,20 @@ class Base(metaclass=ABCMeta):
         self.args = args
 
     @abstractmethod
-    def read(self, **arg) -> bytes:
+    def read(self, **kwargs) -> bytes:
         pass
 
-    def read_str(self, **arg) -> str:
+    def read_str(self, **kwargs) -> str:
         """read()の戻り値をUTF-8の文字列に変換して返します。"""
-        return self.read(**arg).decode("utf-8")
+        return self.read(**kwargs).decode("utf-8")
 
     @abstractmethod
-    def write(self, contents: bytes, **arg) -> None:
+    def write(self, contents: bytes, **kwargs) -> None:
         pass
 
-    def write_str(self, contents: str, **arg) -> None:
+    def write_str(self, contents: str, **kwargs) -> None:
         """write()の引数をUTF-8のバイト列に変換して渡します。"""
-        self.write(contents.encode("utf-8"), **arg)
+        self.write(contents.encode("utf-8"), **kwargs)
 
     @abstractmethod
     def communicate(self) -> None:

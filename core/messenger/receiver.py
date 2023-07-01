@@ -17,8 +17,8 @@ class Receiver(Base):
         return self._receiver.read(**arg)
 
     @hook
-    def write(self, contents: bytes, **arg) -> None:
-        self._receiver.write(**arg)
+    def write(self, contents: bytes, **kwargs) -> None:
+        self._receiver.write(**kwargs)
 
     @hook
     def communicate(self) -> None:

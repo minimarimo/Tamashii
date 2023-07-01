@@ -13,8 +13,8 @@ class Sender(Base):
         self._sender = load_sender(data)
 
     @hook
-    def write(self, contents: bytes, **arg) -> bytes:
-        return self._sender.write(contents, **arg)
+    def write(self, contents: bytes, **kwargs) -> bytes:
+        return self._sender.write(contents, **kwargs)
 
     @hook
     def read(self, **arg) -> bytes:
