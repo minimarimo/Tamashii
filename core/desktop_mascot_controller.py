@@ -55,6 +55,7 @@ class DesktopMascotController:
         receiver.connect()
         while not receiver.is_available():
             message = "Hello! from receiver!"
+            print("receiver message: " + message)
             receiver.write_str(message)
             response = receiver.read_str()
             print("receiver response: " + response)
@@ -64,4 +65,4 @@ class DesktopMascotController:
         デスクトップマスコットの起動
         """
         Thread(target=self._run_sender).start()
-        # Thread(target=self._run_receiver).start()
+        Thread(target=self._run_receiver).start()
