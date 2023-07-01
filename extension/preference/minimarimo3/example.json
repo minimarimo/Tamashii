@@ -1,0 +1,60 @@
+{
+    "author": "minimarimo3",
+    "core": {
+        "messenger": {
+            "receiver": {
+                "path": "minimarimo3/tcp_receiver.py",
+                "args":  {
+                    "host": "10.0.0.103",
+                    "port": 8000
+                }
+            },
+            "sender": {
+                "path": "minimarimo3/tcp_sender.py",
+                "args":  {
+                    "host": "10.0.0.103",
+                    "port": 8001
+                }
+            }
+        },
+        "ui": "minimarimo3/colorful_print.py"
+    },
+    "extension": {
+        "model": [
+            {
+                "name": "character_1",
+                "description": "テスト用のキャラ1です",
+                "path": "minimarimo3/character_1.vrm"
+            },
+            {
+                "name": "キャラクター2",
+                "description": "テスト用のキャラ2です",
+                "path": "minimarimo3/character_2.vrm"
+            },
+            {
+                "name": "hoge",
+                "description": "nya",
+                "path": "minimarimo3/hoge.vrm"
+            }
+        ],
+        "scenario": [
+            {
+                "name": "test_scenario",
+                "description": "テスト用のシナリオです",
+                "path": "minimarimo3/test_scenario1.toml"
+            },
+            {
+                "name": "test_scenario2",
+                "description": "テスト用のシナリオ2です",
+                "path": "minimarimo3/test_scenario2.toml"
+            }
+        ],
+        "hook": {
+            "is_enabled": true,
+            "path": [
+                "minimarimo3/test_script1.py",
+                "minimarimo3/test_script2.py"
+            ]
+        }
+    }
+}

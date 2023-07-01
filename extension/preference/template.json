@@ -1,0 +1,53 @@
+{
+    "author": "設定の作成者",
+    "core": {
+        "messenger": {
+            "receiver": {
+                "path": "core.messenger.receiverで使用するスクリプトのパス",
+                "args":  {
+                    "comment": "任意の引数をここで渡します"
+                }
+            },
+            "sender": {
+                "path": "core.messenger.senderで使用するスクリプトのパス",
+                "args":  {
+                    "comment": "任意の引数をここで渡します"
+                }
+            }
+        },
+        "ui": "print_{error, info, success, ...}などの実態"
+    },
+    "extension": {
+        "model": [
+            {
+                "name": "キャラの呼び名",
+                "description": "キャラについての説明",
+                "path": "キャラクターの居場所(パス)"
+            },
+            {
+                "name": "キャラの呼び名",
+                "description": "キャラについての説明",
+                "path": "キャラクターの居場所(パス)"
+            }
+        ],
+        "scenario": [
+            {
+                "name": "シナリオの呼び名",
+                "description": "シナリオの説明",
+                "path": "シナリオ(TOMLというフォーマット)の格納場所"
+            },
+            {
+                "name": "シナリオの呼び名",
+                "description": "シナリオの説明",
+                "path": "シナリオ(TOMLというフォーマット)の格納場所"
+            }
+        ],
+        "hook": {
+            "is_enabled": true,
+            "path": [
+                "tamashiiの動作を拡張するスクリプトのパスを配列で格納します",
+                "スクリプト2"
+            ]
+        }
+    }
+}
