@@ -1,6 +1,7 @@
 import json  # loadに使う
 
-from core.extension.prefernce.data import PreferenceData, from_dict
+from core.extension.prefernce.data import PreferenceData
+from core.extension.loader import load_dataclass_from_dict
 from core.desktop_mascot_controller import DesktopMascotController
 
 
@@ -11,8 +12,7 @@ if __name__ == "__main__":
     # preference.jsonはautherを読み込み自動でロード ← ユーザー名被ったらどうすんの?
     SETTINGS_PATH = "extension/preference/minimarimo3/example.json"
     with open(SETTINGS_PATH, "r", encoding="UTF-8") as f:
-        contents = json.load(f)
-        settings_data = from_dict(PreferenceData, contents)
+        settings_data = load_dataclass_from_dict(PreferenceData, json.load(f))
 
     desktop_mascot_controller = DesktopMascotController(settings_data)
     desktop_mascot_controller.start()
