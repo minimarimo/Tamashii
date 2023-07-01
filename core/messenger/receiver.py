@@ -12,14 +12,17 @@ class Receiver(Base):
         super().__init__()
         self._receiver = load_receiver(data)
 
+    def is_available(self) -> bool:
+        return self._receiver.is_available()
+
     @hook
-    def read(self, **arg) -> bytes:
-        return self._receiver.read(**arg)
+    def read(self, **kwarg) -> bytes:
+        return self._receiver.read(**kwarg)
 
     @hook
     def write(self, contents: bytes, **kwargs) -> None:
         self._receiver.write(**kwargs)
 
     @hook
-    def communicate(self) -> None:
-        Thread(target=self._receiver.communicate).start()
+    def connect(self) -> None:
+        self._receiver.connect()

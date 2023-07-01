@@ -1,8 +1,12 @@
+from threading import Thread
+
 from core.extension.prefernce.data import PreferenceData
 from core.extension.scenario.data import LoadedScenarioData
 from core.messenger.messenger import Messenger
 from core.extension.prefernce.loader import load_hook
 from core.extension.scenario.loader import load_scenario
+from core.messenger.receiver import Receiver
+from core.messenger.sender import Sender
 
 
 class DesktopMascotController:
@@ -24,14 +28,40 @@ class DesktopMascotController:
         DesktopMascotController.scenario = load_scenario(preference.extension.scenario)
 
     @classmethod
-    def get_scenario(cls, name: str) -> LoadedScenarioData:
+    def get_scenario(cls) -> LoadedScenarioData:
         """
         キャラの発言タイミングとその内容を返します
         """
         return cls.scenario
 
+    def _run_sender(self):
+        """
+        karadaにメッセージを送信する
+        """
+        sender = self._messenger.sender
+        sender.connect()
+        while not sender.is_available():
+            message = "Hello! from sender!"
+            print("sender message: " + message)
+            sender.write_str(message)
+            response = sender.read_str()
+            print("sender response: " + response)
+
+    def _run_receiver(self):
+        """
+        karadaから送られてきたメッセージを受信する
+        """
+        receiver = self._messenger.receiver
+        receiver.connect()
+        while not receiver.is_available():
+            message = "Hello! from receiver!"
+            receiver.write_str(message)
+            response = receiver.read_str()
+            print("receiver response: " + response)
+
     def start(self):
         """
         デスクトップマスコットの起動
         """
-        self._messenger.communicate()
+        Thread(target=self._run_sender).start()
+        # Thread(target=self._run_receiver).start()
