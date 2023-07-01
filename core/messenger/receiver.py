@@ -21,7 +21,7 @@ class Receiver(Base):
 
     @hook
     def write(self, contents: bytes, **kwargs) -> None:
-        self._receiver.write(**kwargs)
+        self._receiver.write(contents, **kwargs)
 
     @hook
     def connect(self) -> None:
