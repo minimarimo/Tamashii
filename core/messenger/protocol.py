@@ -1,15 +1,5 @@
-from dataclasses import dataclass
 from typing import Any, List, Dict
-
-
-@dataclass
-class Nest:
-    key: str
-    message: str
-    time: float
-    number: int
-    boolean: bool
-    hogeofoajweiojfoiaewiofeioawfoaw: List[str]
+from dataclasses import dataclass
 
 
 @dataclass
@@ -23,6 +13,10 @@ class Say:
     args: SayArgs
 
 
+def generate_say_command(args: SayArgs) -> Say:
+    return Say(command='Say', args=args)
+
+
 @dataclass
 class SleepArgs:
     time: float
@@ -34,6 +28,28 @@ class Sleep:
     args: SleepArgs
 
 
+def generate_sleep_command(args: SleepArgs) -> Sleep:
+    return Sleep(command='Sleep', args=args)
+
+
+@dataclass
+class LoadCharacterArgs:
+    name: str
+    path: str
+    description: str
+    license: str
+
+
+@dataclass
+class LoadCharacter:
+    command: str
+    args: LoadCharacterArgs
+
+
+def generate_loadcharacter_command(args: LoadCharacterArgs) -> LoadCharacter:
+    return LoadCharacter(command='LoadCharacter', args=args)
+
+
 @dataclass
 class TestArgs:
     message: str
@@ -41,7 +57,7 @@ class TestArgs:
     number: int
     boolean: bool
     list: List[str]
-    nest: Nest
+    nest: Dict[str, Any]
 
 
 @dataclass
@@ -50,13 +66,5 @@ class Test:
     args: TestArgs
 
 
-def say(args: SayArgs) -> Say:
-    return Say(command='say', args=args)
-
-
-def sleep(args: SleepArgs) -> Sleep:
-    return Sleep(command='sleep', args=args)
-
-
-def test(args: TestArgs) -> Test:
-    return Test(command='test', args=args)
+def generate_test_command(args: TestArgs) -> Test:
+    return Test(command='Test', args=args)

@@ -1,3 +1,4 @@
+from dataclasses import asdict
 from threading import Thread
 
 from core.extension.prefernce.data import PreferenceData
@@ -39,27 +40,36 @@ class DesktopMascotController:
         """
         sender = self._messenger.sender
         sender.connect()
+        # licenseはvrmから抽出するが、今は開発中なので固定値
+        for model in self._preference.extension.model:
+            sender.write_str(generate_loadcharacter_command(LoadCharacterArgs(**asdict(model), license="Dummy License")))
+            sender.read_str()
+            # とりあえず1キャラだけロード TODO: 複数キャラ
+            break
         while not sender.is_available():
             # 本来ならここで何の行動をするか判断する実装が入る
             # 今は開発中なのでSayコマンドのみの実装
             message = input("喋る内容を入力してください:")
             print("sender message: " + message)
-            sender.write_str(say(SayArgs([message])))
+            # そう。ここが開発用のコードなので、SayArgsではなく適切なシナリオを読み込む関数に変わる
+            sender.write_str(generate_say_command(SayArgs([message])))
             response = sender.read_str()
             print("sender response: " + response)
 
     def _run_receiver(self):
         """
         karadaから送られてきたメッセージを受信する
+        TODO: 未実装
         """
         receiver = self._messenger.receiver
         receiver.connect()
         while not receiver.is_available():
+            response = receiver.read_str()
+            print("receiver response: " + response)
+
             message = "Hello! from receiver!"
             print("receiver message: " + message)
             receiver.write_str(message)
-            response = receiver.read_str()
-            print("receiver response: " + response)
 
     def start(self):
         """
