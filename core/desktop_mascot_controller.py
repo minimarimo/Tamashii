@@ -2,11 +2,10 @@ from threading import Thread
 
 from core.extension.prefernce.data import PreferenceData
 from core.extension.scenario.data import LoadedScenarioData
-from core.messenger.messenger import Messenger
 from core.extension.prefernce.loader import load_hook
 from core.extension.scenario.loader import load_scenario
-from core.messenger.receiver import Receiver
-from core.messenger.sender import Sender
+from core.messenger.messenger import Messenger
+from core.messenger.protocol import *
 
 
 class DesktopMascotController:
@@ -41,9 +40,11 @@ class DesktopMascotController:
         sender = self._messenger.sender
         sender.connect()
         while not sender.is_available():
-            message = "Hello! from sender!"
+            # 本来ならここで何の行動をするか判断する実装が入る
+            # 今は開発中なのでSayコマンドのみの実装
+            message = input("喋る内容を入力してください:")
             print("sender message: " + message)
-            sender.write_str(message)
+            sender.write_str(say(SayArgs([message])))
             response = sender.read_str()
             print("sender response: " + response)
 
@@ -65,4 +66,4 @@ class DesktopMascotController:
         デスクトップマスコットの起動
         """
         Thread(target=self._run_sender).start()
-        Thread(target=self._run_receiver).start()
+        # Thread(target=self._run_receiver).start()
