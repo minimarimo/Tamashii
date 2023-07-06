@@ -10,8 +10,9 @@ if __name__ == "__main__":
     # スマホでユーザーにjsonを編集させることを強制すべきではないので、実際はGUIでの選択&編集を想定している
     #   その場合、GUIでの選択&編集をした結果をjsonに書き込む必要がある。それはsettings/Userに書き込む
     # preference.jsonはautherを読み込み自動でロード ← ユーザー名被ったらどうすんの?
-    SETTINGS_PATH = "extension/preference/minimarimo3/example.json"
-    with open(SETTINGS_PATH, "r", encoding="UTF-8") as f:
+    PREFERENCE_PATH = "extension/preference/"
+    JSON_PATH = PREFERENCE_PATH + "minimarimo3/test.json"
+    with open(JSON_PATH, "r", encoding="UTF-8") as f:
         settings_data = load_dataclass_from_dict(PreferenceData, json.load(f))
 
     desktop_mascot_controller = DesktopMascotController(settings_data)

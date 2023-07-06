@@ -46,7 +46,7 @@ class DesktopMascotController:
             sender.read_str()
             # とりあえず1キャラだけロード TODO: 複数キャラ
             break
-        while not sender.is_available():
+        while sender.is_available():
             # 本来ならここで何の行動をするか判断する実装が入る
             # 今は開発中なのでSayコマンドのみの実装
             message = input("喋る内容を入力してください:")
@@ -63,10 +63,9 @@ class DesktopMascotController:
         """
         receiver = self._messenger.receiver
         receiver.connect()
-        while not receiver.is_available():
+        while receiver.is_available():
             response = receiver.read_str()
             print("receiver response: " + response)
-
             message = "Hello! from receiver!"
             print("receiver message: " + message)
             receiver.write_str(message)
