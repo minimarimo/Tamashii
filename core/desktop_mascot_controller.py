@@ -40,7 +40,7 @@ class DesktopMascotController:
         """
         sender = self._messenger.sender
         sender.connect()
-        while not sender.is_available():
+        while sender.is_available():
             message = "Hello! from sender!"
             print("sender message: " + message)
             sender.write_str(message)
@@ -53,7 +53,7 @@ class DesktopMascotController:
         """
         receiver = self._messenger.receiver
         receiver.connect()
-        while not receiver.is_available():
+        while receiver.is_available():
             message = "Hello! from receiver!"
             print("receiver message: " + message)
             receiver.write_str(message)

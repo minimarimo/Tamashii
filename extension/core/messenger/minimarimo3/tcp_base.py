@@ -16,6 +16,7 @@ class TcpBase(Base):
         self._raw_message = b""
 
     def is_available(self) -> bool:
+        # TODO: これバグってるね。接続可能状況でもFalseが返ってるんじゃ?
         return not self.fd or self.fd.closed
 
     def connect(self):
