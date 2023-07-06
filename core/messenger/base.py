@@ -1,3 +1,5 @@
+import json
+from dataclasses import asdict, is_dataclass
 from abc import ABCMeta, abstractmethod
 
 
@@ -28,9 +30,13 @@ class Base(metaclass=ABCMeta):
     def write(self, contents: bytes, **kwargs) -> None:
         pass
 
-    def write_str(self, contents: str, **kwargs) -> None:
+    def write_str(self, contents, **kwargs) -> None:
         """write()の引数をUTF-8のバイト列に変換して渡します。"""
-        self.write((contents + "\n").encode(), **kwargs)
+        def to_json(obj):
+            if is_dataclass(obj):
+                return json.dumps(asdict(obj))
+            return json.dumps(obj)
+        self.write((to_json(contents) + "\n").encode(), **kwargs)
 
     @abstractmethod
     def connect(self) -> None:
