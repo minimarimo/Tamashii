@@ -40,8 +40,6 @@ def load_hook(hook_preference: HookData):
                 method[path_name] = function
         return method
 
-    if not hook_preference.is_enabled:
-        return
     for path in hook_preference.path:
         module = load_and_get_static_method(f"extension.script.{os.path.splitext(os.path.basename(path))[0]}",
                                             f"./extension/hook/{path}",

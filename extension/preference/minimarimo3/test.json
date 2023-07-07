@@ -4,13 +4,11 @@
     "messenger": {
       "receiver": {
         "path": "minimarimo3/stub_receiver.py",
-        "args":  {
-        }
+        "args":  { }
       },
       "sender": {
         "path": "minimarimo3/stub_sender.py",
-        "args":  {
-        }
+        "args":  { }
       }
     },
     "ui": "print_{error, info, success, ...}などの実態"
@@ -33,20 +31,12 @@
         "path": "minimarimo3/hoge.vrm"
       }
     ],
-    "scenario": [
-      {
-        "name": "test_scenario",
-        "description": "テスト用のシナリオです",
-        "path": "minimarimo3/test_scenario1.toml"
-      },
-      {
-        "name": "test_scenario2",
-        "description": "テスト用のシナリオ2です",
-        "path": "minimarimo3/test_scenario2.toml"
-      }
-    ],
+    "scenario": {
+      "name": "test_scenario",
+      "description": "テスト用のシナリオです",
+      "path": "minimarimo3/test_scenario1.toml"
+    },
     "hook": {
-      "is_enabled": true,
       "path": [
         "minimarimo3/test_script1.py",
         "minimarimo3/test_script2.py"

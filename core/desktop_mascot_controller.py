@@ -15,8 +15,6 @@ class DesktopMascotController:
     """
     hooks: dict[str, list[staticmethod]]
     """拡張機能で実装された関数が格納されています"""
-    scenario: LoadedScenarioData
-    """キャラの発言タイミングとその内容が格納されています"""
 
     def __init__(self, preference: PreferenceData):
         DesktopMascotController.hooks = load_hook(preference.extension.hook)
@@ -25,14 +23,7 @@ class DesktopMascotController:
         self._messenger = Messenger(preference.core.messenger)
         # self._ui = load_ui(preference.core.ui)
         # self._model = load_model(preference.extension.model)
-        DesktopMascotController.scenario = load_scenario(preference.extension.scenario)
-
-    @classmethod
-    def get_scenario(cls) -> LoadedScenarioData:
-        """
-        キャラの発言タイミングとその内容を返します
-        """
-        return cls.scenario
+        self._scenario = load_scenario(preference.extension.scenario)
 
     def _run_sender(self):
         """
@@ -49,6 +40,7 @@ class DesktopMascotController:
         while sender.is_available():
             # 本来ならここで何の行動をするか判断する実装が入る
             # 今は開発中なのでSayコマンドのみの実装
+            print(self._scenario)
             message = input("喋る内容を入力してください:")
             print("sender message: " + message)
             # そう。ここが開発用のコードなので、SayArgsではなく適切なシナリオを読み込む関数に変わる

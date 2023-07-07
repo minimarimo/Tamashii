@@ -49,7 +49,6 @@ class ScenarioData:
 @dataclass
 class HookData:
     """Config.extension.hook: tamashiiの動作を拡張する"""
-    is_enabled: bool
     path: List[str]
 
 
@@ -57,7 +56,7 @@ class HookData:
 class ExtensionData:
     """Config.extension: coreを除く拡張機能の設定がある"""
     model: List[ModelData]
-    scenario: List[ScenarioData]
+    scenario: ScenarioData
     hook: HookData
 
 
