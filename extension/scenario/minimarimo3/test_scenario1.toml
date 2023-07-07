@@ -21,13 +21,13 @@ default_speak_interval = 0.01 # キャラクターが一文喋った後に待機
 OnFirstLoad = [
     [
         """
-こんにちは!{self.my.name}です。私はこのデスクトップマスコットの案内役です。
+こんにちは!{my.name}です。私はこのデスクトップマスコットの案内役です。
 現在のバージョンは{software.version}です。
 まずは貴方の名前を教えて頂けますか?
 {ask_user_name()}
 {IF(user.name == "minimarimo3")}""",
         [
-            ["...まだ完成しないんですか?{exit_message()}"],
+            ["...まだ完成しないんですか?{exit_desktop_mascot()}"],
             ["{user.name}さんですね!"]
         ],
         'synchronize("よろしくお願いします!", "よろしく...")',
@@ -41,7 +41,7 @@ OnFirstLoad = [
 
 OnLoad = [
     [
-        "こんにちは!{self.my.name}です。今日もよろしくお願いします。"
+        "こんにちは!{my.name}です。今日もよろしくお願いします。"
     ]
 ]  # OnLoad
 
@@ -58,12 +58,12 @@ OnRandom = [
     [
         "～♪",
         "...ZZZ",
-        "{IF(self.my.user_love_level < 0, self.my.user_love_level == 0, self.my.user_love_level < 30, self.my.user_love_level < 50)}",
+        "{IF(my.user_love_level < 0, my.user_love_level == 0, my.user_love_level < 30, my.user_love_level < 50)}",
         [
             # 愛情 < 0
             [
                 "私のこと嫌いなんですか?別にいいですけど私はいつでもフォルダ全部消せるってこと覚えておいてくださいね。",
-                "...(ピリピリしてる。逃げよう{self.my.exit()})",
+                "...(ピリピリしてる。逃げよう{my.hide()})",
             ],
             # 愛情 == 0
             [
@@ -86,10 +86,10 @@ OnRandom = [
             # その他(今回は(50 <= 愛情)になる)
             [
                 "...好きです",
-                "{IF(self.my.user_love_level < 30)}",
+                "{IF(my.user_love_level < 30)}",
                 [
                     # 愛情 < 30
-                    ["...{self.my.exit()}"],
+                    ["...{my.hide()}"],
                     # その他(今回は(30 <= 愛情)になる)
                     ["私も好き"]
                 ]

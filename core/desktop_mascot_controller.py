@@ -6,7 +6,7 @@ from typing import Optional, Type
 from core.extension.prefernce.data import PreferenceData
 from core.extension.scenario.data import LoadedScenarioData
 from core.extension.prefernce.loader import load_hook
-from core.extension.scenario.loader import load_scenario, parse_scenario
+from core.extension.scenario.loader import load_scenario, parse_and_execute_scenario, ScenarioInstance
 from core.messenger.messenger import Messenger
 from core.messenger.protocol import *
 
@@ -27,6 +27,7 @@ class DesktopMascotController:
         # self._ui = load_ui(preference.core.ui)
         # self._model = load_model(preference.extension.model)
         self._scenario = load_scenario(preference.extension.scenario)
+        self._scenario_instance = ScenarioInstance(preference)
         self._flags = {}
         """karadaから送られてきたフラグを格納する"""
         self.user_love_level = 50
@@ -49,7 +50,7 @@ class DesktopMascotController:
         # 何も起きていなければランダムにメッセージを送信する
         on_random = self._scenario.Message.OnRandom
         contents = on_random[random.randint(0, len(on_random) - 1)] if on_random else []
-        action_result = parse_scenario(contents, self)
+        action_result = parse_and_execute_scenario(contents, self, self._scenario_instance)
 
         return generate_say_command(SayArgs(message=action_result))
 

@@ -1,7 +1,9 @@
+import re
 import tomllib
 
+import core.extension.loader
 from core.extension.scenario.data import LoadedScenarioData, MessageData
-from core.extension.prefernce.data import ScenarioData
+from core.extension.prefernce.data import ScenarioData, PreferenceData
 from core.extension.loader import load_dataclass_from_dict
 
 
@@ -20,7 +22,7 @@ def load_scenario(scenario_preferences: ScenarioData) -> LoadedScenarioData:
     return load_dataclass_from_dict(LoadedScenarioData, scenario)
 
 
-def parse_scenario(darty_scenario: list[str], self) -> list[str]:
+def parse_and_execute_scenario(darty_scenario: list[str], self, scenario_instance) -> list[str]:
     """
     IF文や関数などを解析してlist[str]に変換する
     """
@@ -75,8 +77,35 @@ def parse_scenario(darty_scenario: list[str], self) -> list[str]:
     while "{IF" in str(formatted_scenario):
         formatted_scenario = replace_if_statement(formatted_scenario)
 
+    result = []
+    # 改行毎にキャラのチェンジ関数を挿入する
     for scenario in formatted_scenario:
-        print("シナリオ", scenario)
+        result.append(scenario)
+        result.append("{self.change_character()}")
 
-    # TODO: かっこの中身を実行する
-    return formatted_scenario
+    # かっこの中身を実行する
+    for scenario in result:
+        # 正規表現を使って "{}" の間にある全ての式を見つけます。
+        expressions = re.findall(r"{(.*?)}", scenario)
+
+        print("self._scenario_instance." + str(expressions))
+        # 各式を評価し、結果を文字列として保持します。
+        globals()["self"] = self
+        evaluated_expressions = [str(exec("self._scenario_instance.", locals(), globals())) for expression in expressions]
+
+        # 元の式を評価結果で置換します。
+        for original, evaluated in zip(expressions, evaluated_expressions):
+            result.append(scenario.replace("{" + f'{original}' + "}", evaluated))
+
+    return result
+
+
+# シナリオ内はこのクラスを通じてスクリプトを実行する
+class ScenarioInstance:
+    def __init__(self, preference: PreferenceData):
+        scenario = preference.extension.scenario
+        self.my = preference.extension.model[0].name
+        for command_path in scenario.command:
+            creator_name = command_path.split("/")[0]
+            setattr(self, creator_name, core.extension.prefernce.loader.load_library(
+                creator_name, "./extension/command/" + command_path).Characters())

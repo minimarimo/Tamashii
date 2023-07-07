@@ -43,6 +43,7 @@ class ScenarioData:
     """Config.extension.scenario: シナリオの設定がある"""
     name: str
     description: str
+    command: List[str]
     path: str
 
 

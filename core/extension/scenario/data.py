@@ -17,7 +17,6 @@ class MessageData:
 @dataclass
 class LoadedScenarioData:
     """シナリオの設定がある"""
-    # scenario: ScenarioData
     Preference: PreferenceData
     Dictionary: Dict[str, List[str]]
     Message: MessageData

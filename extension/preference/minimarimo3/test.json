@@ -34,6 +34,9 @@
     "scenario": {
       "name": "test_scenario",
       "description": "テスト用のシナリオです",
+      "command": [
+        "minimarimo3/for_scenario.py"
+      ],
       "path": "minimarimo3/test_scenario1.toml"
     },
     "hook": {
