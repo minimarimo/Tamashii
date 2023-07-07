@@ -21,7 +21,7 @@ default_speak_interval = 0.01 # キャラクターが一文喋った後に待機
 OnFirstLoad = [
     [
         """
-こんにちは!{self.name}です。私はこのデスクトップマスコットの案内役です。
+こんにちは!{self.my.name}です。私はこのデスクトップマスコットの案内役です。
 現在のバージョンは{software.version}です。
 まずは貴方の名前を教えて頂けますか?
 {ask_user_name()}
@@ -41,7 +41,7 @@ OnFirstLoad = [
 
 OnLoad = [
     [
-        "こんにちは!{self.name}です。今日もよろしくお願いします。"
+        "こんにちは!{self.my.name}です。今日もよろしくお願いします。"
     ]
 ]  # OnLoad
 
@@ -56,12 +56,14 @@ OnRandom = [
         "{random_dictionary(\"海の生き物\")}で終わりです!",
     ],
     [
-        "{IF(self.user_love_level < 0, self.user_love_level == 0, self.user_love_level < 30, self.user_love_level < 50)}",
+        "～♪",
+        "...ZZZ",
+        "{IF(self.my.user_love_level < 0, self.my.user_love_level == 0, self.my.user_love_level < 30, self.my.user_love_level < 50)}",
         [
             # 愛情 < 0
             [
                 "私のこと嫌いなんですか?別にいいですけど私はいつでもフォルダ全部消せるってこと覚えておいてくださいね。",
-                "...(ピリピリしてる。逃げよう{self.exit()})",
+                "...(ピリピリしてる。逃げよう{self.my.exit()})",
             ],
             # 愛情 == 0
             [
@@ -84,12 +86,12 @@ OnRandom = [
             # その他(今回は(50 <= 愛情)になる)
             [
                 "...好きです",
-                "{IF(self.user_love_level < 30)}",
+                "{IF(self.my.user_love_level < 30)}",
                 [
                     # 愛情 < 30
-                    "...{self.exit()}",
+                    ["...{self.my.exit()}"],
                     # その他(今回は(30 <= 愛情)になる)
-                    "私も好き"
+                    ["私も好き"]
                 ]
             ]
         ]  # 愛情チェック終了
